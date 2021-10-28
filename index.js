@@ -36,10 +36,8 @@ async function run() {
 
     app.post("/users", async (req, res) => {
       const newUser = req.body;
-      const insertedUser = await personsCollection.insertOne(newUser);
-      console.log(
-        `A document was inserted with the _id: ${insertedUser.insertedId}`
-      );
+      const result = await personsCollection.insertOne(newUser);
+      console.log(`A document was inserted with the _id: ${result.insertedId}`);
       res.json(newUser);
     });
     app.get("/users", async (req, res) => {
