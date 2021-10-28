@@ -17,13 +17,12 @@ app.listen(port, () => {
   console.log("listening to port");
 });
 
-// user: First User
-// password:git branch -M main
+// user: firstUser
+// password:nzLCtSe0Aj0NABLI
 
 const ObjectId = require("mongodb").ObjectId;
 
-const uri =
-  "mongodb+srv://firstUser:nzLCtSe0Aj0NABLI@cluster0.ig2yp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env._DB_USER}:${process.env._DB_PASS}@cluster0.ig2yp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -37,8 +36,10 @@ async function run() {
 
     app.post("/users", async (req, res) => {
       const newUser = req.body;
-      const result = await personsCollection.insertOne(newUser);
-      console.log(`A document was inserted with the _id: ${result.insertedId}`);
+      const insertedUser = await personsCollection.insertOne(newUser);
+      console.log(
+        `A document was inserted with the _id: ${insertedUser.insertedId}`
+      );
       res.json(newUser);
     });
     app.get("/users", async (req, res) => {
